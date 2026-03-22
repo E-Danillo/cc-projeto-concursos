@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>AprovaJá</title>
+</head>
+<body>
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+                    <span class="brand">AprovaJá</span>
+                </div>
+                <ul class="menu" id="menu">
+                    <li class="active">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#">📄 Concursos</a>
+                    </li>
+                    <li>
+                        <a href="#">🔔 Convocações</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user">Olá, Usuário Demo</span>
+                <button class="icon-btn">👤</button>
+                <button class="icon-btn logout">🚪</button>
+            </div>
+            <!-- Botão hambúrguer -->
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </div>
+    
+    <div class="apresentacao">
+        <h1>Bem-vindo, Usuário Demo!</h1>
+        <p>Aqui está um resumo dos seus concursos e alertas</p>
+    </div>
+
+<main class="dashboard">
+
+    <!-- Seção 1: Stats -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div>
+                <p class="stat-label">Áreas de interesse</p>
+                <p class="stat-value">2</p>
+            </div>
+            <div class="stat-icon gray">📈</div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <p class="stat-label">Inscrições abertas</p>
+                <p class="stat-value">2</p>
+            </div>
+            <div class="stat-icon green">📅</div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <p class="stat-label">Concursos realizados</p>
+                <p class="stat-value">0</p>
+            </div>
+            <div class="stat-icon purple">🏅</div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <p class="stat-label">Novos alertas</p>
+                <p class="stat-value">3</p>
+            </div>
+            <div class="stat-icon orange">🔔</div>
+        </div>
+    </section>
+
+    <!-- Seção 2: Painéis -->
+    <section class="panels-grid">
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-title">🔔 Alertas recentes</p>
+                    <p class="panel-subtitle">Notificações sobre suas áreas de interesse</p>
+                </div>
+            </div>
+            <div class="alerta-item info">
+                <span class="alerta-icon">🔔</span>
+                <div>
+                    <p class="alerta-titulo">Novo concurso previsto: Banco do Brasil – Analista de Sistemas</p>
+                    <p class="alerta-categoria">Tecnologia da Informação</p>
+                </div>
+            </div>
+            <div class="alerta-item warning">
+                <span class="alerta-icon">⚠️</span>
+                <div>
+                    <p class="alerta-titulo">Inscrições encerram em breve: Técnico Judiciário TJSP</p>
+                    <p class="alerta-categoria">Administração</p>
+                </div>
+            </div>
+            <div class="alerta-item success">
+                <span class="alerta-icon">✅</span>
+                <div>
+                    <p class="alerta-titulo">Resultado publicado: Concurso DATAPREV 2025</p>
+                    <p class="alerta-categoria">Tecnologia da Informação</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-title">🏅 Minhas convocações</p>
+                    <p class="panel-subtitle">Acompanhe suas chamadas</p>
+                </div>
+                <button class="btn-link">Ver todas</button>
+            </div>
+            <div class="empty-state">
+                <span>🏅</span>
+                <p>Você ainda não possui convocações</p>
+                <p class="muted">Adicione concursos realizados no seu perfil</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 3: Concursos -->
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <p class="panel-title">📅 Inscrições abertas nas suas áreas</p>
+                <p class="panel-subtitle">Concursos disponíveis para inscrição</p>
+            </div>
+            <button class="btn-link">Ver todos</button>
+        </div>
+        <div class="concursos-lista">
+            <div class="concurso-card">
+                <div class="concurso-header">
+                    <p class="concurso-titulo">Analista de TI</p>
+                    <span class="badge green">Inscrições Abertas</span>
+                </div>
+                <p class="concurso-orgao">Tribunal Regional Federal – 3ª Região</p>
+                <p class="concurso-desc">Desenvolvimento e manutenção de sistemas, suporte técnico e gestão de infraestrutura.</p>
+                <div class="concurso-info">
+                    <div class="info-item">
+                        <p class="info-label">Salário</p>
+                        <p class="info-value green">R$ 13.994,78</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Vagas</p>
+                        <p class="info-value">45</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Inscrição até</p>
+                        <p class="info-value">14/04/2026</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Prova</p>
+                        <p class="info-value">19/05/2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concurso-card">
+                <div class="concurso-header">
+                    <p class="concurso-titulo">Técnico Judiciário – Área Administrativa</p>
+                    <span class="badge green">Inscrições Abertas</span>
+                </div>
+                <p class="concurso-orgao">Tribunal de Justiça de São Paulo</p>
+                <p class="concurso-desc">Atividades administrativas de apoio às unidades judiciárias.</p>
+                <div class="concurso-info">
+                    <div class="info-item">
+                        <p class="info-label">Salário</p>
+                        <p class="info-value green">R$ 8.956,23</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Vagas</p>
+                        <p class="info-value">150</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Inscrição até</p>
+                        <p class="info-value">31/03/2026</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Prova</p>
+                        <p class="info-value">09/05/2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+    
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
