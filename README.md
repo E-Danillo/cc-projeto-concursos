@@ -16,17 +16,9 @@ O usuário acessa a página e visualiza uma listagem de concursos disponíveis, 
 - JavaScript
 - [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)
 
-## 📂 Estrutura do Projeto
-
-│
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-
 ## 📸 Demonstração
 
-![preview do projeto](./preview.png)
+![preview do projeto](preview.png)
 
 ## 📌 Objetivo do Projeto
 
