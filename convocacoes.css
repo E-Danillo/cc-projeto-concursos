@@ -1,0 +1,57 @@
+/* ── Convocações ── */
+.convocacoes-page {
+    max-width: 1260px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+}
+
+.empty-panel {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.empty-panel h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+}
+
+.empty-panel p {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+}
+
+.btn-perfil {
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.btn-perfil:hover { background: #e69500; }

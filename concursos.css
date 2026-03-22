@@ -1,0 +1,180 @@
+.concursos-page {
+    max-width: 1260px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Filtros ── */
+.filtros {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filtro-busca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filtro-busca input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+}
+
+.filtro-busca input::placeholder { color: #aaa; }
+
+.filtros select {
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    min-width: 180px;
+}
+
+/* ── Cards ── */
+.concursos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.concurso-card {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: sans-serif;
+}
+
+.concurso-titulo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.concurso-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+}
+
+.concurso-orgao {
+    font-size: 13px;
+    color: #888;
+}
+
+.concurso-desc {
+    font-size: 14px;
+    color: #555;
+}
+
+.concurso-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #222;
+}
+
+.info-value.green { color: #2e7d32; }
+
+.badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.badge.green { background: #e8f5e9; color: #2e7d32; }
+
+.concurso-datas {
+    background: #fffbf0;
+    border: 1px solid #ffe0a0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #555;
+}
+
+.concurso-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.btn-detalhes {
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-detalhes:hover { background: #e69500; }
+
+.btn-inscricao {
+    background: white;
+    color: #444;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-inscricao:hover { background: #f5f5f5; }
+
+/* ── Responsivo ── */
+@media (max-width: 768px) {
+    .concurso-info { grid-template-columns: repeat(2, 1fr); }
+    .filtros { flex-direction: column; }
+    .filtros select { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .concurso-acoes { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="concursos.css">
+    <title>AprovaJá – Concursos</title>
+</head>
+<body>
+
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+                    <span class="brand">AprovaJá</span>
+                </div>
+                <ul class="menu" id="menu">
+                    <li><a href="index.html">🏠 Dashboard</a></li>
+                    <li class="active"><a href="#">📄 Concursos</a></li>
+                    <li><a href="convocacoes.html">🔔 Convocações</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user">Olá, Usuário Demo</span>
+                <button class="icon-btn" onclick="window.location.href='perfil.html'">👤</button>
+                <button class="icon-btn logout">🚪</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="apresentacao">
+        <h1>Explore Concursos</h1>
+        <p>Encontre oportunidades na sua área de interesse</p>
+    </div>
+
+    <main class="concursos-page">
+
+        <!-- Filtros -->
+        <div class="filtros">
+            <div class="filtro-busca">
+                <span class="filtro-icon">🔍</span>
+                <input type="text" placeholder="Buscar por cargo ou órgão...">
+            </div>
+            <select>
+                <option>Todas as áreas</option>
+                <option>Tecnologia da Informação</option>
+                <option>Administração</option>
+                <option>Jurídico</option>
+            </select>
+            <select>
+                <option>Todos os status</option>
+                <option>Inscrições Abertas</option>
+                <option>Encerrado</option>
+            </select>
+        </div>
+
+        <!-- Lista de concursos -->
+        <div class="concursos-lista">
+
+            <div class="concurso-card">
+                <div class="concurso-topo">
+                    <div>
+                        <div class="concurso-titulo-row">
+                            <h2 class="concurso-titulo">Analista de TI</h2>
+                            <span class="badge green">Inscrições Abertas</span>
+                        </div>
+                        <p class="concurso-orgao">📍 Tribunal Regional Federal – 3ª Região</p>
+                    </div>
+                </div>
+
+                <p class="concurso-desc">Desenvolvimento e manutenção de sistemas, suporte técnico e gestão de infraestrutura.</p>
+
+                <div class="concurso-info">
+                    <div class="info-item">
+                        <p class="info-label">💲 Salário</p>
+                        <p class="info-value green">R$ 13.994,78</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">🏢 Vagas</p>
+                        <p class="info-value">45</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">🎓 Escolaridade</p>
+                        <p class="info-value">Superior Completo em TI</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">📅 Área</p>
+                        <p class="info-value">Tecnologia da Informação</p>
+                    </div>
+                </div>
+
+                <div class="concurso-datas">
+                    <p><strong>Inscrições até:</strong> 14/04/2026 &bull; <strong>Prova em:</strong> 19/05/2026</p>
+                </div>
+
+                <div class="concurso-acoes">
+                    <button class="btn-detalhes">Ver detalhes</button>
+                    <button class="btn-inscricao">Fazer inscrição</button>
+                </div>
+            </div>
+
+            <div class="concurso-card">
+                <div class="concurso-topo">
+                    <div>
+                        <div class="concurso-titulo-row">
+                            <h2 class="concurso-titulo">Técnico Judiciário – Área Administrativa</h2>
+                            <span class="badge green">Inscrições Abertas</span>
+                        </div>
+                        <p class="concurso-orgao">📍 Tribunal de Justiça de São Paulo</p>
+                    </div>
+                </div>
+
+                <p class="concurso-desc">Atividades administrativas de apoio às unidades judiciárias.</p>
+
+                <div class="concurso-info">
+                    <div class="info-item">
+                        <p class="info-label">💲 Salário</p>
+                        <p class="info-value green">R$ 8.956,23</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">🏢 Vagas</p>
+                        <p class="info-value">150</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">🎓 Escolaridade</p>
+                        <p class="info-value">Ensino Médio Completo</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">📅 Área</p>
+                        <p class="info-value">Administração</p>
+                    </div>
+                </div>
+
+                <div class="concurso-datas">
+                    <p><strong>Inscrições até:</strong> 31/03/2026 &bull; <strong>Prova em:</strong> 09/05/2026</p>
+                </div>
+
+                <div class="concurso-acoes">
+                    <button class="btn-detalhes">Ver detalhes</button>
+                    <button class="btn-inscricao">Fazer inscrição</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

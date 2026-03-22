@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="convocacoes.css">
+    <link rel="stylesheet" href="style.css">
+    <title>AprovaJá – Convocações</title>
+</head>
+<body>
+
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+                    <span class="brand">AprovaJá</span>
+                </div>
+                <ul class="menu" id="menu">
+                    <li><a href="index.html">🏠 Dashboard</a></li>
+                    <li><a href="concursos.html">📄 Concursos</a></li>
+                    <li class="active"><a href="#">🔔 Convocações</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user">Olá, Usuário Demo</span>
+                <button class="icon-btn" onclick="window.location.href='perfil.html'">👤</button>
+                <button class="icon-btn logout">🚪</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="apresentacao">
+        <h1>Minhas Convocações</h1>
+        <p>Acompanhe suas chamadas e prazos de manifestação</p>
+    </div>
+
+    <main class="convocacoes-page">
+        <div class="panel empty-panel">
+            <div class="empty-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/>
+                    <circle cx="12" cy="8" r="6"/>
+                </svg>
+            </div>
+            <h2>Nenhuma convocação registrada</h2>
+            <p>Você ainda não possui convocações. Adicione os concursos<br>que realizou no seu perfil para acompanhar as chamadas.</p>
+            <button class="btn-perfil">Ir para meu perfil</button>
+        </div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
