@@ -23,7 +23,7 @@
                 </ul>
             </div>
             <div class="nav-right">
-                <span class="user">Olá, Usuário Demo</span>
+                <span class="user" id="nav-user-name">Olá, …</span>
                 <button class="icon-btn" onclick="window.location.href='perfil.html'">👤</button>
                 <button class="icon-btn logout">🚪</button>
             </div>
@@ -46,111 +46,23 @@
         <div class="filtros">
             <div class="filtro-busca">
                 <span class="filtro-icon">🔍</span>
-                <input type="text" placeholder="Buscar por cargo ou órgão...">
+                <input type="search" id="filtro-busca" placeholder="Buscar por cargo ou órgão..." autocomplete="off">
             </div>
-            <select>
-                <option>Todas as áreas</option>
-                <option>Tecnologia da Informação</option>
-                <option>Administração</option>
-                <option>Jurídico</option>
+            <select id="filtro-area" aria-label="Filtrar por área">
+                <option value="">Todas as áreas</option>
             </select>
-            <select>
-                <option>Todos os status</option>
-                <option>Inscrições Abertas</option>
-                <option>Encerrado</option>
+            <select id="filtro-status" aria-label="Filtrar por status">
+                <option value="">Todos os status</option>
+                <option value="aberto">Inscrições Abertas</option>
+                <option value="encerrado">Encerrado</option>
             </select>
         </div>
 
-        <!-- Lista de concursos -->
-        <div class="concursos-lista">
-
-            <div class="concurso-card">
-                <div class="concurso-topo">
-                    <div>
-                        <div class="concurso-titulo-row">
-                            <h2 class="concurso-titulo">Analista de TI</h2>
-                            <span class="badge green">Inscrições Abertas</span>
-                        </div>
-                        <p class="concurso-orgao">📍 Tribunal Regional Federal – 3ª Região</p>
-                    </div>
-                </div>
-
-                <p class="concurso-desc">Desenvolvimento e manutenção de sistemas, suporte técnico e gestão de infraestrutura.</p>
-
-                <div class="concurso-info">
-                    <div class="info-item">
-                        <p class="info-label">💲 Salário</p>
-                        <p class="info-value green">R$ 13.994,78</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">🏢 Vagas</p>
-                        <p class="info-value">45</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">🎓 Escolaridade</p>
-                        <p class="info-value">Superior Completo em TI</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">📅 Área</p>
-                        <p class="info-value">Tecnologia da Informação</p>
-                    </div>
-                </div>
-
-                <div class="concurso-datas">
-                    <p><strong>Inscrições até:</strong> 14/04/2026 &bull; <strong>Prova em:</strong> 19/05/2026</p>
-                </div>
-
-                <div class="concurso-acoes">
-                    <button class="btn-detalhes">Ver detalhes</button>
-                    <button class="btn-inscricao">Fazer inscrição</button>
-                </div>
-            </div>
-
-            <div class="concurso-card">
-                <div class="concurso-topo">
-                    <div>
-                        <div class="concurso-titulo-row">
-                            <h2 class="concurso-titulo">Técnico Judiciário – Área Administrativa</h2>
-                            <span class="badge green">Inscrições Abertas</span>
-                        </div>
-                        <p class="concurso-orgao">📍 Tribunal de Justiça de São Paulo</p>
-                    </div>
-                </div>
-
-                <p class="concurso-desc">Atividades administrativas de apoio às unidades judiciárias.</p>
-
-                <div class="concurso-info">
-                    <div class="info-item">
-                        <p class="info-label">💲 Salário</p>
-                        <p class="info-value green">R$ 8.956,23</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">🏢 Vagas</p>
-                        <p class="info-value">150</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">🎓 Escolaridade</p>
-                        <p class="info-value">Ensino Médio Completo</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">📅 Área</p>
-                        <p class="info-value">Administração</p>
-                    </div>
-                </div>
-
-                <div class="concurso-datas">
-                    <p><strong>Inscrições até:</strong> 31/03/2026 &bull; <strong>Prova em:</strong> 09/05/2026</p>
-                </div>
-
-                <div class="concurso-acoes">
-                    <button class="btn-detalhes">Ver detalhes</button>
-                    <button class="btn-inscricao">Fazer inscrição</button>
-                </div>
-            </div>
-
-        </div>
+        <!-- Lista preenchida via JSONPlaceholder (js/api.js) -->
+        <div class="concursos-lista" id="concursos-lista" aria-live="polite"></div>
     </main>
 
+    <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
@@ -158,6 +70,7 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
+        AprovaJaApi.initConcursosPage();
     </script>
 </body>
 </html>

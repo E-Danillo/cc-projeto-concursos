@@ -23,7 +23,7 @@
                 </ul>
             </div>
             <div class="nav-right">
-                <span class="user">Olá, Usuário Demo</span>
+                <span class="user" id="nav-user-name">Olá, …</span>
                 <button class="icon-btn" onclick="window.location.href='perfil.html'"><a href="perfil.html"></a>👤</button>
                 <button class="icon-btn logout">🚪</button>
             </div>
@@ -54,6 +54,7 @@
         </div>
     </main>
 
+    <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
@@ -61,6 +62,7 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
+        AprovaJaApi.initNavUserName();
     </script>
 </body>
 </html>

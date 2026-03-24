@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <div class="nav-right">
-                <span class="user">Olá, Usuário Demo</span>
+                <span class="user" id="nav-user-name">Olá, …</span>
                 <button class="icon-btn active-page" onclick="window.location.href='perfil.html'">👤</button>
                 <button class="icon-btn logout">🚪</button>
             </div>
@@ -56,13 +56,13 @@
             <div class="info-grid">
                 <div class="info-field">
                     <p class="field-label">Nome completo</p>
-                    <p class="field-value">Usuário Demo</p>
+                    <p class="field-value" id="perfil-nome">…</p>
                 </div>
                 <div class="info-field">
                     <p class="field-label">Email</p>
                     <p class="field-value">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        usuario@email.com
+                        <span id="perfil-email">…</span>
                     </p>
                 </div>
             </div>
@@ -112,6 +112,7 @@
 
     </main>
 
+    <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
@@ -119,6 +120,7 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
+        AprovaJaApi.initPerfil();
     </script>
 </body>
 </html>

@@ -27,7 +27,7 @@
                 </ul>
             </div>
             <div class="nav-right">
-                <span class="user">Olá, Usuário Demo</span>
+                <span class="user" id="nav-user-name">Olá, …</span>
                 <button class="icon-btn" onclick="window.location.href='html/perfil.html'">👤</button>
                 <button class="icon-btn logout">🚪</button>
             </div>
@@ -41,7 +41,7 @@
     </div>
     
     <div class="apresentacao">
-        <h1>Bem-vindo, Usuário Demo!</h1>
+        <h1 id="dashboard-saudacao">Carregando…</h1>
         <p>Aqui está um resumo dos seus concursos e alertas</p>
     </div>
 
@@ -52,28 +52,28 @@
         <div class="stat-card">
             <div>
                 <p class="stat-label">Áreas de interesse</p>
-                <p class="stat-value">2</p>
+                <p class="stat-value" id="stat-areas">2</p>
             </div>
             <div class="stat-icon gray">📈</div>
         </div>
         <div class="stat-card">
             <div>
                 <p class="stat-label">Inscrições abertas</p>
-                <p class="stat-value">2</p>
+                <p class="stat-value" id="stat-inscricoes">—</p>
             </div>
             <div class="stat-icon green">📅</div>
         </div>
         <div class="stat-card">
             <div>
                 <p class="stat-label">Concursos realizados</p>
-                <p class="stat-value">0</p>
+                <p class="stat-value" id="stat-realizados">—</p>
             </div>
             <div class="stat-icon purple">🏅</div>
         </div>
         <div class="stat-card">
             <div>
                 <p class="stat-label">Novos alertas</p>
-                <p class="stat-value">3</p>
+                <p class="stat-value" id="stat-alertas">3</p>
             </div>
             <div class="stat-icon orange">🔔</div>
         </div>
@@ -88,26 +88,8 @@
                     <p class="panel-subtitle">Notificações sobre suas áreas de interesse</p>
                 </div>
             </div>
-            <div class="alerta-item info">
-                <span class="alerta-icon">🔔</span>
-                <div>
-                    <p class="alerta-titulo">Novo concurso previsto: Banco do Brasil – Analista de Sistemas</p>
-                    <p class="alerta-categoria">Tecnologia da Informação</p>
-                </div>
-            </div>
-            <div class="alerta-item warning">
-                <span class="alerta-icon">⚠️</span>
-                <div>
-                    <p class="alerta-titulo">Inscrições encerram em breve: Técnico Judiciário TJSP</p>
-                    <p class="alerta-categoria">Administração</p>
-                </div>
-            </div>
-            <div class="alerta-item success">
-                <span class="alerta-icon">✅</span>
-                <div>
-                    <p class="alerta-titulo">Resultado publicado: Concurso DATAPREV 2025</p>
-                    <p class="alerta-categoria">Tecnologia da Informação</p>
-                </div>
+            <div id="alertas-recentes" aria-live="polite">
+                <p class="api-status">Carregando alertas…</p>
             </div>
         </div>
 
@@ -136,65 +118,14 @@
             </div>
             <button class="btn-link">Ver todos</button>
         </div>
-        <div class="concursos-lista">
-            <div class="concurso-card">
-                <div class="concurso-header">
-                    <p class="concurso-titulo">Analista de TI</p>
-                    <span class="badge green">Inscrições Abertas</span>
-                </div>
-                <p class="concurso-orgao">Tribunal Regional Federal – 3ª Região</p>
-                <p class="concurso-desc">Desenvolvimento e manutenção de sistemas, suporte técnico e gestão de infraestrutura.</p>
-                <div class="concurso-info">
-                    <div class="info-item">
-                        <p class="info-label">Salário</p>
-                        <p class="info-value green">R$ 13.994,78</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Vagas</p>
-                        <p class="info-value">45</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Inscrição até</p>
-                        <p class="info-value">14/04/2026</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Prova</p>
-                        <p class="info-value">19/05/2026</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="concurso-card">
-                <div class="concurso-header">
-                    <p class="concurso-titulo">Técnico Judiciário – Área Administrativa</p>
-                    <span class="badge green">Inscrições Abertas</span>
-                </div>
-                <p class="concurso-orgao">Tribunal de Justiça de São Paulo</p>
-                <p class="concurso-desc">Atividades administrativas de apoio às unidades judiciárias.</p>
-                <div class="concurso-info">
-                    <div class="info-item">
-                        <p class="info-label">Salário</p>
-                        <p class="info-value green">R$ 8.956,23</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Vagas</p>
-                        <p class="info-value">150</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Inscrição até</p>
-                        <p class="info-value">31/03/2026</p>
-                    </div>
-                    <div class="info-item">
-                        <p class="info-label">Prova</p>
-                        <p class="info-value">09/05/2026</p>
-                    </div>
-                </div>
-            </div>
+        <div class="concursos-lista" id="dashboard-concursos" aria-live="polite">
+            <p class="api-status">Carregando concursos…</p>
         </div>
     </section>
 
 </main>
     
+    <script src="js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
@@ -203,6 +134,8 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
+
+        AprovaJaApi.initDashboard();
     </script>
 </body>
 </html>
