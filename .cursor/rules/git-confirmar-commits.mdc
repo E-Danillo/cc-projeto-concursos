@@ -1,0 +1,10 @@
+---
+description: Commits e push no GitHub só após confirmação explícita do usuário
+alwaysApply: true
+---
+
+# Git e GitHub
+
+Antes de executar `git commit`, `git push` ou qualquer ação que altere o histórico remoto, **pergunte ao usuário e espere confirmação explícita** (mensagem de commit, branch, e se deve enviar ao GitHub).
+
+Não faça commit ou push automático ao final das tarefas, salvo se o usuário pedir explicitamente na mesma mensagem para commitar ou publicar.
