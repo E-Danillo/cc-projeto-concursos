@@ -550,7 +550,13 @@
     await recarregar();
   }
 
-  function countAreasInteresse() {
+  async function countAreasInteresse() {
+    if (window.AprovaJaPerfil && window.AprovaJaPerfil.getAreasCount) {
+      try {
+        const n = await window.AprovaJaPerfil.getAreasCount();
+        if (n != null && n > 0) return n;
+      } catch (e) {}
+    }
     try {
       const raw = localStorage.getItem('aprovaJaAreasInteresse');
       if (raw) {
@@ -561,7 +567,12 @@
     return AREAS_FALLBACK.length >= 2 ? 2 : 1;
   }
 
-  function countRealizados() {
+  async function countRealizados() {
+    if (window.AprovaJaPerfil && window.AprovaJaPerfil.getRealizadosCount) {
+      try {
+        return await window.AprovaJaPerfil.getRealizadosCount();
+      } catch (e) {}
+    }
     try {
       const raw = localStorage.getItem('aprovaJaConcursosRealizados');
       if (raw) {
@@ -603,9 +614,9 @@
       });
       const abertosN = abertos.length;
 
-      if (elAreas) elAreas.textContent = String(countAreasInteresse());
+      if (elAreas) elAreas.textContent = String(await countAreasInteresse());
       if (elInsc) elInsc.textContent = String(abertosN);
-      if (elReal) elReal.textContent = String(countRealizados());
+      if (elReal) elReal.textContent = String(await countRealizados());
       if (elAlertas) elAlertas.textContent = String(Math.min(5, Math.max(1, abertosN || 1)));
 
       const postsAlerta = abertos.slice(0, 3);
@@ -647,33 +658,119 @@
     const nomeEl = document.getElementById('perfil-nome');
     const emailEl = document.getElementById('perfil-email');
     const navEl = document.getElementById('nav-user-name');
+    const areasGrid = document.getElementById('perfil-areas-grid');
+    const nomeInput = document.getElementById('perfil-nome-input');
+    const nomeEditWrap = document.getElementById('perfil-nome-edit-wrap');
+    const btnEditar = document.getElementById('perfil-btn-editar-nome');
+    const btnSalvarNome = document.getElementById('perfil-nome-btn-salvar');
+    const msgEl = document.getElementById('perfil-msg');
+
+    function showPerfilMsg(text, isErr) {
+      if (!msgEl) return;
+      msgEl.textContent = text || '';
+      msgEl.hidden = !text;
+      msgEl.className = 'perfil-msg' + (isErr ? ' perfil-msg-error' : '');
+    }
 
     async function preencher() {
-      if (window.AprovaJaAuth && window.AprovaJaAuth.getSession) {
-        const s = await window.AprovaJaAuth.getSession();
-        if (s && s.tipo === 'supabase' && s.session && s.session.user) {
-          const u = s.session.user;
-          const meta = u.user_metadata || {};
-          const nome = meta.nome || meta.name || (u.email ? u.email.split('@')[0] : '—');
-          if (nomeEl) nomeEl.textContent = nome;
-          if (emailEl) emailEl.textContent = u.email || '—';
-          if (navEl) navEl.textContent = 'Olá, ' + String(nome).split(' ')[0];
-          return;
+      if (!window.AprovaJaAuth || !window.AprovaJaAuth.getSession) return;
+
+      const s = await window.AprovaJaAuth.getSession();
+      if (s && s.tipo === 'supabase' && s.session && s.session.user) {
+        const u = s.session.user;
+        let row = null;
+        if (window.AprovaJaPerfil && window.AprovaJaPerfil.ensurePerfilRow) {
+          try {
+            row = await window.AprovaJaPerfil.ensurePerfilRow();
+          } catch (e) {}
         }
-        if (s && s.tipo === 'demo' && s.user) {
-          const nome = s.user.nome || s.user.name || s.user.email || '—';
-          if (nomeEl) nomeEl.textContent = nome;
-          if (emailEl) emailEl.textContent = s.user.email || '—';
-          if (navEl) navEl.textContent = 'Olá, ' + String(nome).split(' ')[0];
-          return;
+        const meta = u.user_metadata || {};
+        const nome =
+          (row && row.nome_exibicao) ||
+          meta.nome ||
+          meta.name ||
+          (u.email ? u.email.split('@')[0] : '—');
+        if (nomeEl) nomeEl.textContent = nome;
+        if (nomeInput) nomeInput.value = nome;
+        if (emailEl) emailEl.textContent = u.email || '—';
+        if (navEl) navEl.textContent = 'Olá, ' + String(nome).split(' ')[0];
+
+        const selected =
+          row && Array.isArray(row.areas_interesse) ? row.areas_interesse.slice() : [];
+        if (window.AprovaJaPerfil && areasGrid && window.AprovaJaPerfil.renderAreasChips) {
+          window.AprovaJaPerfil.renderAreasChips(areasGrid, selected, async function (arr) {
+            showPerfilMsg('Salvando áreas…', false);
+            try {
+              await window.AprovaJaPerfil.saveAreasInteresse(arr);
+              showPerfilMsg('Preferências salvas.', false);
+              setTimeout(function () {
+                showPerfilMsg('', false);
+              }, 2000);
+            } catch (e) {
+              showPerfilMsg(e.message || 'Erro ao salvar.', true);
+            }
+          });
         }
+        return;
       }
+
+      if (s && s.tipo === 'demo' && s.user) {
+        const p =
+          window.AprovaJaPerfil && window.AprovaJaPerfil.readDemoPerfil
+            ? window.AprovaJaPerfil.readDemoPerfil()
+            : { nome_exibicao: '', areas_interesse: [] };
+        const nome = p.nome_exibicao || s.user.nome || s.user.name || s.user.email || '—';
+        if (nomeEl) nomeEl.textContent = nome;
+        if (nomeInput) nomeInput.value = nome;
+        if (emailEl) emailEl.textContent = s.user.email || '—';
+        if (navEl) navEl.textContent = 'Olá, ' + String(nome).split(' ')[0];
+        const selected = Array.isArray(p.areas_interesse) ? p.areas_interesse.slice() : [];
+        if (window.AprovaJaPerfil && areasGrid && window.AprovaJaPerfil.renderAreasChips) {
+          window.AprovaJaPerfil.renderAreasChips(areasGrid, selected, async function (arr) {
+            await window.AprovaJaPerfil.saveAreasInteresse(arr);
+            showPerfilMsg('Preferências salvas neste navegador.', false);
+            setTimeout(function () {
+              showPerfilMsg('', false);
+            }, 2000);
+          });
+        }
+        return;
+      }
+
       if (nomeEl) nomeEl.textContent = '—';
       if (emailEl) emailEl.textContent = '—';
       if (navEl) navEl.textContent = 'Olá, visitante';
     }
 
     await preencher();
+
+    if (btnEditar && nomeEditWrap && nomeInput) {
+      btnEditar.addEventListener('click', function () {
+        nomeEditWrap.classList.toggle('hidden');
+        if (!nomeEditWrap.classList.contains('hidden')) nomeInput.focus();
+      });
+    }
+
+    if (btnSalvarNome && nomeInput) {
+      btnSalvarNome.addEventListener('click', async function () {
+        showPerfilMsg('', false);
+        try {
+          if (window.AprovaJaPerfil && window.AprovaJaPerfil.updateNomeExibicao) {
+            await window.AprovaJaPerfil.updateNomeExibicao(nomeInput.value);
+          }
+          if (nomeEl) nomeEl.textContent = nomeInput.value.trim();
+          const nav = document.getElementById('nav-user-name');
+          if (nav) nav.textContent = 'Olá, ' + nomeInput.value.trim().split(' ')[0];
+          if (nomeEditWrap) nomeEditWrap.classList.add('hidden');
+          showPerfilMsg('Nome atualizado.', false);
+          setTimeout(function () {
+            showPerfilMsg('', false);
+          }, 2000);
+        } catch (e) {
+          showPerfilMsg(e.message || 'Erro ao salvar.', true);
+        }
+      });
+    }
   }
 
   window.AprovaJaApi = {

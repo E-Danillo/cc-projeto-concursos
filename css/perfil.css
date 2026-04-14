@@ -168,6 +168,47 @@
 }
 
 /* Áreas de interesse */
+.hidden {
+    display: none !important;
+}
+
+.perfil-msg {
+    font-size: 0.88rem;
+    color: #15803d;
+    margin: 0 0 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+}
+
+.perfil-msg-error {
+    color: #b91c1c;
+    background: #fef2f2;
+}
+
+.perfil-nome-edit-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.perfil-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.areas-hint {
+    font-size: 0.82rem;
+    color: #9ca3af;
+    margin: 0 0 0.5rem;
+}
+
 .areas-grid {
     display: flex;
     flex-wrap: wrap;
@@ -188,13 +229,20 @@
     transition: all 0.18s;
     user-select: none;
     background: #fafafa;
+    font-family: inherit;
+}
+
+button.area-chip {
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .area-chip input[type=checkbox] {
     display: none;
 }
 
-.area-chip:has(input:checked) {
+.area-chip:has(input:checked),
+.area-chip.active {
     background: #fff7ed;
     border-color: #f97316;
     color: #c2410c;

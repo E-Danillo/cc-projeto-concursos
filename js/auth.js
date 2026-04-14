@@ -82,10 +82,24 @@
     const s = await getSession();
     if (!s) return null;
     if (s.tipo === 'demo' && s.user) {
+      if (window.AprovaJaPerfil && window.AprovaJaPerfil.readDemoPerfil) {
+        const p = window.AprovaJaPerfil.readDemoPerfil();
+        if (p && p.nome_exibicao) {
+          return String(p.nome_exibicao).split(' ')[0] || 'visitante';
+        }
+      }
       const n = s.user.nome || s.user.name || s.user.email || '';
       return String(n).split('@')[0].split(' ')[0] || 'visitante';
     }
     if (s.tipo === 'supabase' && s.session && s.session.user) {
+      if (window.AprovaJaPerfil && window.AprovaJaPerfil.fetchPerfilRow) {
+        try {
+          const row = await window.AprovaJaPerfil.fetchPerfilRow();
+          if (row && row.nome_exibicao) {
+            return String(row.nome_exibicao).split(' ')[0] || 'visitante';
+          }
+        } catch (e) {}
+      }
       const meta = s.session.user.user_metadata || {};
       const n = meta.nome || meta.name || s.session.user.email || '';
       return String(n).split('@')[0].split(' ')[0] || 'visitante';
@@ -164,15 +178,24 @@
     });
   }
 
+  async function getSupabase() {
+    await initSupabase();
+    return supabaseClient;
+  }
+
   async function boot() {
     await initSupabase();
     await guardPrivatePage();
+    if (window.AprovaJaPerfil && typeof window.AprovaJaPerfil.syncAfterAuth === 'function') {
+      await window.AprovaJaPerfil.syncAfterAuth();
+    }
     bindLogoutButtons();
   }
 
   window.AprovaJaAuth = {
     init: initSupabase,
     boot: boot,
+    getSupabase: getSupabase,
     getSession: getSession,
     getDisplayNameForNav: getDisplayNameForNav,
     signInWithPassword: signInWithPassword,

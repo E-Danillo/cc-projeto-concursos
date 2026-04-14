@@ -51,12 +51,17 @@
                         <p class="card-subtitle">Seus dados cadastrais</p>
                     </div>
                 </div>
-                <button class="btn-editar">Editar perfil</button>
+                <button type="button" id="perfil-btn-editar-nome" class="btn-editar">Editar nome</button>
             </div>
+            <p id="perfil-msg" class="perfil-msg" role="status" hidden></p>
             <div class="info-grid">
                 <div class="info-field">
                     <p class="field-label">Nome completo</p>
                     <p class="field-value" id="perfil-nome">…</p>
+                    <div id="perfil-nome-edit-wrap" class="perfil-nome-edit-wrap hidden">
+                        <input type="text" id="perfil-nome-input" class="perfil-input" maxlength="120" placeholder="Seu nome" autocomplete="name">
+                        <button type="button" id="perfil-nome-btn-salvar" class="btn-editar">Salvar</button>
+                    </div>
                 </div>
                 <div class="info-field">
                     <p class="field-label">Email</p>
@@ -79,18 +84,8 @@
                     </div>
                 </div>
             </div>
-            <div class="areas-grid">
-                <span class="area-chip active">💻 Tecnologia da Informação</span>
-                <span class="area-chip active">📋 Administração</span>
-                <span class="area-chip">⚖️ Jurídico / Direito</span>
-                <span class="area-chip">💰 Fiscal / Tributário</span>
-                <span class="area-chip">🏥 Saúde</span>
-                <span class="area-chip">🎓 Educação / Magistério</span>
-                <span class="area-chip">🔬 Engenharia</span>
-                <span class="area-chip">🏦 Financeiro / Bancário</span>
-                <span class="area-chip">🛡️ Segurança Pública</span>
-                <span class="area-chip">🌿 Meio Ambiente</span>
-            </div>
+            <div class="areas-grid" id="perfil-areas-grid" aria-label="Áreas de interesse"></div>
+            <p class="areas-hint">Clique para marcar ou desmarcar. As escolhas são salvas na sua conta.</p>
         </section>
 
         <!-- Concursos Realizados -->
@@ -114,6 +109,7 @@
 
     <script src="../js/config.js"></script>
     <script src="../js/auth.js"></script>
+    <script src="../js/perfil-db.js"></script>
     <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
