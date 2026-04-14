@@ -138,9 +138,15 @@
     return /login\.html/i.test(window.location.pathname);
   }
 
+  function isPublicListingPage() {
+    const p = (window.location.pathname || '').toLowerCase();
+    return p.indexOf('concursos.html') !== -1 || p.indexOf('convocacoes.html') !== -1;
+  }
+
   async function guardPrivatePage() {
     const c = cfg();
     if (!c.protegerPaginasPrivadas || isLoginPage()) return;
+    if (c.permitirConcursosSemLogin !== false && isPublicListingPage()) return;
     if (!hasSupabaseConfig()) return;
     await initSupabase();
     const s = await getSession();

@@ -5,6 +5,7 @@
 window.AprovaJaConfig = {
   supabaseUrl: 'https://xxxx.supabase.co',
   supabaseAnonKey: 'sua-chave-anon',
-  protegerPaginasPrivadas: false,
+  protegerPaginasPrivadas: true,
+  permitirConcursosSemLogin: true,
   ufPadrao: 'sp',
 };
