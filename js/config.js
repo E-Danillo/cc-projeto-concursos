@@ -1,6 +1,8 @@
 /**
- * Configuração do AprovaJá (copie config.example.js e ajuste, ou edite aqui).
- * Supabase: projeto em https://supabase.com — Authentication → Email.
+ * Configuração global do AprovaJá (lida pelo auth.js, api.js e perfil-db.js).
+ *
+ * - Duplique a partir de config.example.js se quiser ignorar este arquivo no Git.
+ * - Supabase: crie o projeto em https://supabase.com (Authentication → Email).
  */
 window.AprovaJaConfig = {
   /** URL do projeto (Settings → API) */

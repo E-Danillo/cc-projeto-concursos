@@ -1,10 +1,15 @@
 /**
- * Tabela public.perfis no Supabase (nome, áreas, etc.) + fallback local em modo demo.
+ * Perfil do usuário: tabela public.perfis no Supabase + armazenamento local em modo demo.
+ *
+ * Colunas esperadas: user_id, nome_exibicao, areas_interesse[], concursos_realizados_ids[], atualizado_em…
+ * Depende de AprovaJaAuth (js/auth.js). Expõe window.AprovaJaPerfil para api.js.
  */
 (function (window) {
   const TABLE = 'perfis';
+  /** localStorage para nome/áreas quando não há Supabase. */
   const DEMO_PERFIL_KEY = 'aprovaJaPerfilLocal';
 
+  /** Lista fixa de áreas exibidas como chips na página de perfil (texto = valor salvo no banco). */
   var AREAS_OPCOES = [
     { emoji: '💻', nome: 'Tecnologia da Informação' },
     { emoji: '📋', nome: 'Administração' },
@@ -44,6 +49,7 @@
     localStorage.setItem(DEMO_PERFIL_KEY, JSON.stringify(p));
   }
 
+  /** Insere ou atualiza a linha do usuário em perfis após login (nome vindo do Auth/metadata). */
   async function syncAfterAuth() {
     if (!window.AprovaJaAuth) return;
     const s = await window.AprovaJaAuth.getSession();
@@ -64,6 +70,7 @@
     if (error) console.warn('AprovaJá perfis sync:', error.message);
   }
 
+  /** Uma linha de perfis para o usuário logado (Supabase). */
   async function fetchPerfilRow() {
     if (!window.AprovaJaAuth) return null;
     const s = await window.AprovaJaAuth.getSession();
@@ -79,6 +86,7 @@
     return data;
   }
 
+  /** Garante que exista registro: tenta buscar, senão sync + busca de novo. */
   async function ensurePerfilRow() {
     let row = await fetchPerfilRow();
     if (!row) {
@@ -88,6 +96,7 @@
     return row;
   }
 
+  /** Atualiza nome em perfis e user_metadata no Auth (para o menu refletir o nome). */
   async function updateNomeExibicao(nome) {
     const s = await window.AprovaJaAuth.getSession();
     const n = (nome || '').trim();
@@ -121,6 +130,7 @@
     if (e2) console.warn('AprovaJá updateUser metadata:', e2.message);
   }
 
+  /** Persiste o array de strings de áreas selecionadas (chips do perfil). */
   async function saveAreasInteresse(areas) {
     const list = Array.isArray(areas) ? areas : [];
     const s = await window.AprovaJaAuth.getSession();
@@ -146,6 +156,7 @@
     if (error) console.warn('AprovaJá areas:', error.message);
   }
 
+  /** Quantidade de áreas para o card do dashboard; null = usar fallback no api.js. */
   async function getAreasCount() {
     const s = await window.AprovaJaAuth.getSession();
     if (s && s.tipo === 'demo') {
@@ -159,6 +170,7 @@
     return null;
   }
 
+  /** Tamanho de concursos_realizados_ids (placeholder até haver UI para marcar concursos). */
   async function getRealizadosCount() {
     const s = await window.AprovaJaAuth.getSession();
     if (s && s.tipo === 'demo') {
@@ -171,6 +183,7 @@
     return 0;
   }
 
+  /** Desenha os chips e chama onToggle(novoArray) a cada clique. */
   function renderAreasChips(container, selected, onToggle) {
     if (!container) return;
     container.innerHTML = AREAS_OPCOES.map(function (opt) {
@@ -217,6 +230,7 @@
     return escapeHtml(s).replace(/'/g, '&#39;');
   }
 
+  /** Métodos usados em api.js (perfil/dashboard) e auth.js (sync). */
   window.AprovaJaPerfil = {
     syncAfterAuth: syncAfterAuth,
     fetchPerfilRow: fetchPerfilRow,

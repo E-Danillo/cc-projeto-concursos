@@ -1,5 +1,11 @@
 /**
- * Dados: concursos curados (data/concursos-curados.json) + API pública (concursos-api.deno.dev).
+ * Camada de dados e UI dinâmica do AprovaJá (concursos, dashboard, perfil no cliente).
+ *
+ * Fontes:
+ * - data/concursos-curados.json → itens revisados pela equipe (sempre mesclados).
+ * - API Deno (concursos-api.deno.dev/{uf}) → listagens regionais (campos variam; fazemos parse flexível).
+ *
+ * Expõe window.AprovaJaApi; requer config.js, auth.js; perfil completo também precisa de perfil-db.js.
  */
 (function (window) {
   const DENO_API = 'https://concursos-api.deno.dev';
@@ -13,14 +19,18 @@
   const ALERTA_CLASSES = ['info', 'warning', 'success'];
   const ALERTA_ICONS = ['🔔', '⚠️', '✅'];
 
+  // --- Config e carregamento de JSON (curados + API Deno) ---
+
   function cfg() {
     return window.AprovaJaConfig || { ufPadrao: 'sp' };
   }
 
+  /** Ajusta caminho para data/ quando a página está em html/ ou na raiz. */
   function baseDataPrefix() {
     return window.location.pathname.indexOf('/html/') !== -1 ? '../' : '';
   }
 
+  /** GET JSON genérico; lança erro se resposta não for OK. */
   async function fetchJsonUrl(url) {
     const res = await fetch(url);
     if (!res.ok) {
@@ -29,6 +39,7 @@
     return res.json();
   }
 
+  /** Carrega o JSON curado pelo time (falha silenciosa → lista vazia). */
   async function fetchCurados() {
     const url = baseDataPrefix() + 'data/concursos-curados.json';
     try {
@@ -39,6 +50,7 @@
     }
   }
 
+  /** Busca concursos abertos/previstos na API pública para a UF (duas letras). */
   async function fetchDenoConcursos(uf) {
     const u = String(uf || 'sp')
       .toLowerCase()
@@ -72,6 +84,7 @@
     return x;
   }
 
+  /** Primeiro valor não vazio dentre chaves possíveis (API externa vem com nomes variados). */
   function firstString(obj, keys) {
     if (!obj || typeof obj !== 'object') return '';
     for (let i = 0; i < keys.length; i++) {
@@ -102,6 +115,7 @@
     return truncar(partes.join(' · '), 220);
   }
 
+  /** Heurística simples para preencher a “área” quando o JSON não traz campo explícito. */
   function inferirAreaDeTexto(blob) {
     const b = (blob || '').toLowerCase();
     if (/ti\b|informática|tecnologia|computação|dados/.test(b)) return 'Tecnologia da Informação';
@@ -112,6 +126,7 @@
     return 'Geral';
   }
 
+  /** Converte um item do arquivo concursos-curados.json no formato interno do card. */
   function mapCuradoJson(item, idx) {
     const id = String(item.id || 'curado-' + idx);
     const titulo = truncar(item.titulo || item.cargo || 'Concurso', 100);
@@ -162,6 +177,7 @@
     };
   }
 
+  /** Converte um item bruto da API Deno (aberto ou previsto) no formato interno. */
   function mapDenoItem(raw, uf, tipoLista, idx) {
     const orgao = firstString(raw, ['Órgão', 'Orgão', 'órgão', 'Orgao']) || 'Órgão público';
     const cargo =
@@ -215,6 +231,7 @@
     };
   }
 
+  /** Junta concursos_abertos e concursos_previstos em um único array mapeado. */
   function flattenDenoPayload(data, uf) {
     const out = [];
     const ab = data.concursos_abertos;
@@ -232,6 +249,7 @@
     return out;
   }
 
+  /** Curados primeiro, depois itens Deno; avisoApi = mensagem quando a API só retorna status. */
   async function loadConcursosData(uf) {
     const curadosRaw = await fetchCurados();
     const curados = curadosRaw.map(mapCuradoJson);
@@ -260,6 +278,8 @@
 
     return { concursos: merged, avisoApi: avisoApi };
   }
+
+  // --- Templates HTML (cards de concurso, alertas) e escape XSS ---
 
   function btnInscricaoHtml(c) {
     if (c.linkUrl) {
@@ -401,6 +421,7 @@
     return escapeHtml(s).replace(/'/g, '&#39;');
   }
 
+  /** UF do select ou última escolha em localStorage (página Concursos). */
   function getUfSelecionada() {
     const sel = document.getElementById('filtro-uf');
     if (sel && sel.value) return sel.value;
@@ -411,6 +432,7 @@
     return cfg().ufPadrao || 'sp';
   }
 
+  /** Preenche “Olá, …” na barra usando sessão / perfil. */
   async function initNavUserName() {
     const el = document.getElementById('nav-user-name');
     if (!el) return;
@@ -426,6 +448,9 @@
     el.textContent = 'Olá, visitante';
   }
 
+  /**
+   * Página html/concursos.html: carrega lista, filtros (UF, área, status, busca) e re-render ao mudar UF.
+   */
   async function initConcursosPage() {
     await initNavUserName();
 
@@ -541,6 +566,7 @@
     await recarregar();
   }
 
+  /** Número para o card “Áreas de interesse” (perfil Supabase ou legado em localStorage). */
   async function countAreasInteresse() {
     if (window.AprovaJaPerfil && window.AprovaJaPerfil.getAreasCount) {
       try {
@@ -558,6 +584,7 @@
     return 0;
   }
 
+  /** Quantidade para “Concursos realizados” (array em perfis ou legado). */
   async function countRealizados() {
     if (window.AprovaJaPerfil && window.AprovaJaPerfil.getRealizadosCount) {
       try {
@@ -574,6 +601,9 @@
     return 0;
   }
 
+  /**
+   * index.html: estatísticas, alertas (amostra dos concursos abertos) e preview de inscrições.
+   */
   async function initDashboard() {
     const elAreas = document.getElementById('stat-areas');
     const elInsc = document.getElementById('stat-inscricoes');
@@ -649,6 +679,9 @@
     }
   }
 
+  /**
+   * html/perfil.html: dados do Auth + linha em perfis, chips de área e edição de nome.
+   */
   async function initPerfil() {
     const nomeEl = document.getElementById('perfil-nome');
     const emailEl = document.getElementById('perfil-email');
@@ -768,6 +801,7 @@
     }
   }
 
+  /** initConcursosPage / initDashboard / initPerfil / initNavUserName — chamados pelas páginas HTML. */
   window.AprovaJaApi = {
     initConcursosPage: initConcursosPage,
     initDashboard: initDashboard,
