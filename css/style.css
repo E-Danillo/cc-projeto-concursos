@@ -265,6 +265,8 @@ color: red;
 
 .badge.gray { background: #eceff1; color: #546e7a; }
 
+.badge.warning { background: #fff8e1; color: #f57f17; }
+
 .api-status { padding: 16px; text-align: center; color: #666; font-size: 14px; }
 
 .api-error { color: #c62828; }

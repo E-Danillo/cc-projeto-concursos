@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login.css">
-    <title>AprovaJá – Login</title>
+    <title>AprovaJá – Entrar</title>
 </head>
 <body>
 
@@ -21,38 +21,193 @@
             <p>Acompanhe seus concursos em um só lugar</p>
         </div>
 
-        <div class="login-card">
-            <h2>Entrar na sua conta</h2>
-            <p class="card-subtitle">Digite suas credenciais para acessar</p>
-
-            <div class="field">
-                <label for="email">Email</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">✉️</span>
-                    <input type="email" id="email" placeholder="seu@email.com">
-                </div>
-            </div>
-
-            <div class="field">
-                <label for="senha">Senha</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" id="senha" placeholder="••••••••">
-                </div>
-            </div>
-
-            <button class="btn-entrar">Entrar</button>
-
-            <p class="cadastro">Não tem uma conta? <a href="#">Cadastre-se</a></p>
+        <div class="auth-tabs" role="tablist">
+            <button type="button" class="auth-tab active" id="tab-entrar" role="tab" aria-selected="true">Entrar</button>
+            <button type="button" class="auth-tab" id="tab-cadastro" role="tab" aria-selected="false">Criar conta</button>
         </div>
 
-        <p class="hint">Use qualquer email e senha para fazer login</p>
+        <div id="auth-msg" class="auth-msg" role="alert" hidden></div>
+
+        <div class="login-card" id="panel-entrar">
+            <h2>Entrar na sua conta</h2>
+            <p class="card-subtitle">Use o mesmo e-mail cadastrado</p>
+
+            <div class="field">
+                <label for="login-email">Email</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="login-email" autocomplete="email" placeholder="seu@email.com" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="login-senha">Senha</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="login-senha" autocomplete="current-password" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="button" class="btn-entrar" id="btn-login">Entrar</button>
+        </div>
+
+        <div class="login-card hidden" id="panel-cadastro">
+            <h2>Criar conta</h2>
+            <p class="card-subtitle">Cadastro real quando o Supabase estiver configurado</p>
+
+            <div class="field">
+                <label for="cad-nome">Nome</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="cad-nome" autocomplete="name" placeholder="Como podemos te chamar">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="cad-email">Email</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="cad-email" autocomplete="email" placeholder="seu@email.com" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="cad-senha">Senha</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="cad-senha" autocomplete="new-password" placeholder="mínimo 6 caracteres" minlength="6" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="cad-senha2">Confirmar senha</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="cad-senha2" autocomplete="new-password" placeholder="repita a senha" minlength="6" required>
+                </div>
+            </div>
+
+            <button type="button" class="btn-entrar" id="btn-cadastro">Cadastrar</button>
+        </div>
+
+        <p class="hint" id="auth-hint"></p>
 
     </div>
 
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
     <script>
-        document.querySelector('.btn-entrar').addEventListener('click', () => {
+        function showMsg(text, isError) {
+            const el = document.getElementById('auth-msg');
+            el.hidden = !text;
+            el.textContent = text || '';
+            el.className = 'auth-msg' + (isError ? ' auth-msg-error' : '');
+        }
+
+        function defaultAfterLogin() {
+            const q = new URLSearchParams(window.location.search);
+            const next = q.get('next');
+            if (next && next.indexOf('login') === -1) {
+                window.location.href = next;
+                return;
+            }
             window.location.href = '../index.html';
+        }
+
+        function setTab(entrar) {
+            const t1 = document.getElementById('tab-entrar');
+            const t2 = document.getElementById('tab-cadastro');
+            const p1 = document.getElementById('panel-entrar');
+            const p2 = document.getElementById('panel-cadastro');
+            if (entrar) {
+                t1.classList.add('active');
+                t2.classList.remove('active');
+                t1.setAttribute('aria-selected', 'true');
+                t2.setAttribute('aria-selected', 'false');
+                p1.classList.remove('hidden');
+                p2.classList.add('hidden');
+            } else {
+                t2.classList.add('active');
+                t1.classList.remove('active');
+                t2.setAttribute('aria-selected', 'true');
+                t1.setAttribute('aria-selected', 'false');
+                p2.classList.remove('hidden');
+                p1.classList.add('hidden');
+            }
+            showMsg('');
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            await AprovaJaAuth.init();
+            const hint = document.getElementById('auth-hint');
+            if (AprovaJaAuth.hasSupabaseConfig()) {
+                hint.textContent =
+                    'Supabase ativo: cadastro e login são salvos na nuvem (verifique o email de confirmação se estiver habilitado).';
+            } else {
+                hint.textContent =
+                    'Modo local: conta fica só neste navegador. Preencha js/config.js com Supabase para cadastro real em equipe.';
+            }
+
+            document.getElementById('tab-entrar').addEventListener('click', function () {
+                setTab(true);
+            });
+            document.getElementById('tab-cadastro').addEventListener('click', function () {
+                setTab(false);
+            });
+
+            document.getElementById('btn-login').addEventListener('click', async function () {
+                const email = document.getElementById('login-email').value.trim();
+                const senha = document.getElementById('login-senha').value;
+                if (!email || !senha) {
+                    showMsg('Preencha email e senha.', true);
+                    return;
+                }
+                try {
+                    showMsg('Entrando…', false);
+                    await AprovaJaAuth.signInWithPassword(email, senha);
+                    defaultAfterLogin();
+                } catch (e) {
+                    showMsg(e.message || 'Não foi possível entrar.', true);
+                }
+            });
+
+            document.getElementById('btn-cadastro').addEventListener('click', async function () {
+                const nome = document.getElementById('cad-nome').value.trim();
+                const email = document.getElementById('cad-email').value.trim();
+                const senha = document.getElementById('cad-senha').value;
+                const senha2 = document.getElementById('cad-senha2').value;
+                if (!email || !senha) {
+                    showMsg('Preencha email e senha.', true);
+                    return;
+                }
+                if (senha !== senha2) {
+                    showMsg('As senhas não coincidem.', true);
+                    return;
+                }
+                if (senha.length < 6) {
+                    showMsg('Use uma senha com pelo menos 6 caracteres.', true);
+                    return;
+                }
+                try {
+                    showMsg('Criando conta…', false);
+                    await AprovaJaAuth.signUpWithPassword(email, senha, nome);
+                    if (AprovaJaAuth.hasSupabaseConfig()) {
+                        const s = await AprovaJaAuth.getSession();
+                        if (s) {
+                            defaultAfterLogin();
+                        } else {
+                            showMsg(
+                                'Conta criada. Confirme o link no email (se o Supabase exigir) e depois entre com sua senha.',
+                                false
+                            );
+                        }
+                    } else {
+                        defaultAfterLogin();
+                    }
+                } catch (e) {
+                    showMsg(e.message || 'Não foi possível cadastrar.', true);
+                }
+            });
         });
     </script>
 </body>

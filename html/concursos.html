@@ -44,6 +44,35 @@
 
         <!-- Filtros -->
         <div class="filtros">
+            <select id="filtro-uf" aria-label="Estado (UF)" title="Lista regional da API pública">
+                <option value="ac">AC</option>
+                <option value="al">AL</option>
+                <option value="ap">AP</option>
+                <option value="am">AM</option>
+                <option value="ba">BA</option>
+                <option value="ce">CE</option>
+                <option value="df">DF</option>
+                <option value="es">ES</option>
+                <option value="go">GO</option>
+                <option value="ma">MA</option>
+                <option value="mt">MT</option>
+                <option value="ms">MS</option>
+                <option value="mg">MG</option>
+                <option value="pa">PA</option>
+                <option value="pb">PB</option>
+                <option value="pr">PR</option>
+                <option value="pe">PE</option>
+                <option value="pi">PI</option>
+                <option value="rj">RJ</option>
+                <option value="rn">RN</option>
+                <option value="rs">RS</option>
+                <option value="ro">RO</option>
+                <option value="rr">RR</option>
+                <option value="sc">SC</option>
+                <option value="sp" selected>SP</option>
+                <option value="se">SE</option>
+                <option value="to">TO</option>
+            </select>
             <div class="filtro-busca">
                 <span class="filtro-icon">🔍</span>
                 <input type="search" id="filtro-busca" placeholder="Buscar por cargo ou órgão..." autocomplete="off">
@@ -54,14 +83,17 @@
             <select id="filtro-status" aria-label="Filtrar por status">
                 <option value="">Todos os status</option>
                 <option value="aberto">Inscrições Abertas</option>
+                <option value="previsto">Previstos</option>
                 <option value="encerrado">Encerrado</option>
             </select>
         </div>
 
-        <!-- Lista preenchida via JSONPlaceholder (js/api.js) -->
+        <!-- Lista: dados curados (data/concursos-curados.json) + API pública -->
         <div class="concursos-lista" id="concursos-lista" aria-live="polite"></div>
     </main>
 
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
@@ -70,7 +102,11 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
-        AprovaJaApi.initConcursosPage();
+        document.addEventListener('DOMContentLoaded', async function () {
+            await AprovaJaAuth.init();
+            await AprovaJaAuth.boot();
+            await AprovaJaApi.initConcursosPage();
+        });
     </script>
 </body>
 </html>

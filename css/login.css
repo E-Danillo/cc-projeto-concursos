@@ -153,4 +153,51 @@ body {
     font-size: 13px;
     color: #aaa;
     text-align: center;
+    max-width: 420px;
+    line-height: 1.4;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    background: orange;
+    color: #fff;
+    border-color: orange;
+}
+
+.login-card.hidden {
+    display: none;
+}
+
+.auth-msg {
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 13px;
+    text-align: center;
+}
+
+.auth-msg-error {
+    background: #ffebee;
+    color: #c62828;
 }

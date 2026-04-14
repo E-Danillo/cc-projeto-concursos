@@ -1,0 +1,21 @@
+{
+  "versao": 1,
+  "atualizado_em": "2026-04-14",
+  "nota": "Edite este arquivo no repositório para divulgar concursos revisados pela equipe.",
+  "itens": [
+    {
+      "id": "curado-exemplo-inss",
+      "titulo": "INSS — Técnico do Seguro Social (exemplo curado)",
+      "orgao": "Instituto Nacional do Seguro Social",
+      "descricao": "Entrada ilustrativa administrada pela equipe. Substitua por editais reais e link oficial quando divulgar.",
+      "area": "Administração",
+      "escolaridade": "Ensino Médio Completo",
+      "vagas": 120,
+      "salario": 5500,
+      "inscricao_ate": "2026-06-15",
+      "prova_em": "2026-09-20",
+      "status": "aberto",
+      "link": "https://www.gov.br/inss/pt-br"
+    }
+  ]
+}

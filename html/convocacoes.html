@@ -24,7 +24,7 @@
             </div>
             <div class="nav-right">
                 <span class="user" id="nav-user-name">Olá, …</span>
-                <button class="icon-btn" onclick="window.location.href='perfil.html'"><a href="perfil.html"></a>👤</button>
+                <button class="icon-btn" onclick="window.location.href='perfil.html'" title="Perfil">👤</button>
                 <button class="icon-btn logout">🚪</button>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -54,6 +54,8 @@
         </div>
     </main>
 
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
@@ -62,7 +64,11 @@
             menu.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
-        AprovaJaApi.initNavUserName();
+        document.addEventListener('DOMContentLoaded', async function () {
+            await AprovaJaAuth.init();
+            await AprovaJaAuth.boot();
+            await AprovaJaApi.initNavUserName();
+        });
     </script>
 </body>
 </html>
