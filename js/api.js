@@ -4,15 +4,6 @@
 (function (window) {
   const DENO_API = 'https://concursos-api.deno.dev';
 
-  const AREAS_FALLBACK = [
-    'Tecnologia da Informação',
-    'Administração',
-    'Jurídico',
-    'Saúde',
-    'Educação',
-    'Geral',
-  ];
-
   const ESCOLARIDADES = [
     'Superior Completo',
     'Ensino Médio Completo',
@@ -564,7 +555,7 @@
         if (Array.isArray(a) && a.length > 0) return a.length;
       }
     } catch (e) {}
-    return AREAS_FALLBACK.length >= 2 ? 2 : 1;
+    return 0;
   }
 
   async function countRealizados() {
@@ -617,7 +608,7 @@
       if (elAreas) elAreas.textContent = String(await countAreasInteresse());
       if (elInsc) elInsc.textContent = String(abertosN);
       if (elReal) elReal.textContent = String(await countRealizados());
-      if (elAlertas) elAlertas.textContent = String(Math.min(5, Math.max(1, abertosN || 1)));
+      if (elAlertas) elAlertas.textContent = String(Math.min(5, abertosN));
 
       const postsAlerta = abertos.slice(0, 3);
       if (alertasBox) {
@@ -643,6 +634,10 @@
         }
       }
     } catch (e) {
+      if (elAreas) elAreas.textContent = '0';
+      if (elInsc) elInsc.textContent = '0';
+      if (elReal) elReal.textContent = '0';
+      if (elAlertas) elAlertas.textContent = '0';
       if (alertasBox) {
         alertasBox.innerHTML =
           '<p class="api-status api-error" role="alert">' + escapeHtml(e.message) + '</p>';
