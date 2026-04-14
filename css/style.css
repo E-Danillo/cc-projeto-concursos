@@ -81,7 +81,10 @@ cursor: pointer;
 }
 
 .logout {
-color: red;
+    color: #b91c1c;
+    font-size: 1.05rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
 }
 
 /* ── Hambúrguer ── */
