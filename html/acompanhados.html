@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/acompanhados.css">
+    <title>AprovaJá – Concursos acompanhados</title>
+</head>
+<body>
+
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+                    <span class="brand">AprovaJá</span>
+                </div>
+                <ul class="menu" id="menu">
+                    <li><a href="../index.html">🏠 Dashboard</a></li>
+                    <li><a href="concursos.html">📄 Concursos</a></li>
+                    <li class="active"><a href="#">📌 Acompanhados</a></li>
+                    <li><a href="convocacoes.html">🔔 Convocações</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user" id="nav-user-name">Olá, …</span>
+                <button class="icon-btn" onclick="window.location.href='perfil.html'" title="Perfil">👤</button>
+                <button type="button" class="icon-btn logout" title="Sair da conta" aria-label="Sair da conta"><span class="logout-text">Sair</span><span class="logout-icons" aria-hidden="true">👔🚪</span></button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="apresentacao">
+        <h1>Concursos acompanhados</h1>
+        <p>CRUD com controle de acesso por cargo (Admin / Usuário)</p>
+    </div>
+
+    <main class="acompanhados-page">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <span class="role-badge" id="role-badge">Carregando cargo…</span>
+                <span class="muted" id="user-hint"></span>
+            </div>
+            <div class="toolbar-right">
+                <button type="button" class="btn-secondary" id="btn-recarregar">Recarregar</button>
+                <button type="button" class="btn-primary" id="btn-novo">+ Novo concurso</button>
+            </div>
+        </div>
+
+        <div id="msg" class="msg" hidden></div>
+
+        <div class="lista" id="lista">
+            <div class="msg">Carregando…</div>
+        </div>
+
+        <section class="admin-box" id="admin-box" hidden>
+            <h2>Admin: gerenciar usuários</h2>
+            <p class="muted">Troque o cargo de um usuário (admin/user). Essa seção só aparece para Admin.</p>
+            <div id="admin-users">
+                <div class="msg">Carregando usuários…</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal criar/editar -->
+    <div class="modal-backdrop" id="modal">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <h2 id="modal-title">Novo concurso</h2>
+
+            <div class="form-grid">
+                <div class="field full">
+                    <label for="f-titulo">Título *</label>
+                    <input id="f-titulo" type="text" maxlength="140" placeholder="Ex.: Prefeitura X — Agente Administrativo">
+                </div>
+                <div class="field">
+                    <label for="f-orgao">Órgão</label>
+                    <input id="f-orgao" type="text" maxlength="140" placeholder="Ex.: Prefeitura de …">
+                </div>
+                <div class="field">
+                    <label for="f-status">Status</label>
+                    <select id="f-status">
+                        <option value="ativo">Ativo</option>
+                        <option value="encerrado">Encerrado</option>
+                        <option value="aprovado">Aprovado</option>
+                        <option value="reprovado">Reprovado</option>
+                    </select>
+                </div>
+                <div class="field full">
+                    <label for="f-obs">Observações</label>
+                    <textarea id="f-obs" placeholder="Notas, datas importantes, links, etc."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="btn-cancelar">Cancelar</button>
+                <button type="button" class="btn-primary" id="btn-salvar">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/perfil-db.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/acompanhados.js"></script>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+        document.addEventListener('DOMContentLoaded', async function () {
+            await AprovaJaAuth.init();
+            await AprovaJaAuth.boot();
+            await AprovaJaApi.initNavUserName();
+            await AprovaJaAcompanhados.init();
+        });
+    </script>
+</body>
+</html>
+

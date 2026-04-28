@@ -63,6 +63,9 @@
     if (!nome) nome = 'Usuário';
     const row = {
       user_id: user.id,
+      // Mantemos o email duplicado em public.perfis para facilitar listagens/admin sem acessar auth.users.
+      // (Requer coluna `email` em public.perfis.)
+      email: user.email || null,
       nome_exibicao: nome,
       atualizado_em: new Date().toISOString(),
     };
