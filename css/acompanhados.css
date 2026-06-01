@@ -258,3 +258,31 @@
 
 .admin-row small { color: #6b7280; }
 
+/* Empty state: exibido quando não há concursos cadastrados */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+}
+
+.empty-state__icon { font-size: 3rem; }
+
+.empty-state__titulo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+}
+
+.empty-state__subtitulo {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0;
+}

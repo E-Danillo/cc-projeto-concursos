@@ -55,8 +55,16 @@
 
         <div class="lista" id="lista">
             <div class="msg">Carregando…</div>
+<!-- A lista de concursos acompanhados será renderizada aqui pelo JavaScript -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <span class="empty-state__icon">📋</span>
+                <h2 class="empty-state__titulo">Nenhum concurso acompanhado ainda</h2>
+                <p class="empty-state__subtitulo">
+                    Clique em <strong>"+ Novo concurso"</strong> para começar a acompanhar.
+                </p>
+            </div>
         </div>
-
+    
         <section class="admin-box" id="admin-box" hidden>
             <h2>Admin: gerenciar usuários</h2>
             <p class="muted">Troque o cargo de um usuário (admin/user). Essa seção só aparece para Admin.</p>

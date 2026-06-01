@@ -118,9 +118,17 @@
     const container = el('lista');
     if (!container) return;
 
+    // Esconde o estado vazio inicialmente //
+
     if (!rows.length) {
-      container.innerHTML =
-        '<div class="msg">Nenhum concurso acompanhado ainda. Clique em <strong>+ Novo concurso</strong>.</div>';
+      container.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-state__icon">📋</span>
+          <h2 class="empty-state__titulo"> Nenhum concurso acompanhado ainda</h2>
+          <p class="empty-state__subtitulo">
+            Clique em <strong>"+ Novo concurso"</strong> para começar a acompanhar.
+          </p>
+        </div>`;
       return;
     }
 
