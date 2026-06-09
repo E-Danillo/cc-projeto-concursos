@@ -292,6 +292,31 @@
     return '<button type="button" class="btn-inscricao" disabled title="Link não informado">Inscrição</button>';
   }
 
+  function getBadgePrazoHtml(dataInscricao) {
+  if (!(dataInscricao instanceof Date) || Number.isNaN(dataInscricao.getTime())) {
+    return '';
+  }
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  const prazo = new Date(dataInscricao);
+  prazo.setHours(0, 0, 0, 0);
+
+  const diffMs = prazo - hoje;
+  const diasRestantes = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diasRestantes < 0 || diasRestantes > 7) {
+    return '';
+  }
+
+  if (diasRestantes === 0) {
+    return '<span class="prazo-badge">Encerra hoje</span>';
+  }
+
+  return '<span class="prazo-badge">Encerra em ' + diasRestantes + ' dias</span>';
+}
+
   function cardConcursoPagina(c) {
     return (
       '<div class="concurso-card" data-area="' +
@@ -335,11 +360,7 @@
       escapeHtml(c.area) +
       '</p></div>' +
       '</div>' +
-      '<div class="concurso-datas"><p><strong>Inscrições até:</strong> ' +
-      escapeHtml(c.inscricaoFmt) +
-      ' &bull; <strong>Prova em:</strong> ' +
-      escapeHtml(c.provaFmt) +
-      '</p></div>' +
+      '<div class="concurso-datas"><p><strong>Inscrições até: ' + escapeHtml(c.inscricaoFmt) + ' ' + getBadgePrazoHtml(c.inscricaoAte) + ' • Prova em: ' + escapeHtml(c.provaFmt) + '</p></div>' +
       '<div class="concurso-acoes">' +
       '<button type="button" class="btn-detalhes">Ver detalhes</button>' +
       btnInscricaoHtml(c) +
