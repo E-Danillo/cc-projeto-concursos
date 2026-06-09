@@ -55,6 +55,17 @@
 }
 
 /* ── Cards ── */
+.prazo-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #ffedd5;
+    color: #c2410c;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
 .concursos-lista {
     display: flex;
     flex-direction: column;

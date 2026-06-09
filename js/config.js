@@ -6,10 +6,10 @@
  */
 window.AprovaJaConfig = {
   /** URL do projeto (Settings → API) */
-  supabaseUrl: 'https://nnffhssrzojtwtiydmye.supabase.co',
+  supabaseUrl: "https://vqkakbdgeexppvlrvklz.supabase.co",
   /** chave anon pública (Settings → API). A chave anon é pública por design; use RLS no Supabase. */
   supabaseAnonKey:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5uZmZoc3Nyem9qdHd0aXlkbXllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODE0NTMsImV4cCI6MjA5MTc1NzQ1M30.-j5g7hgZD-X23nQ9BfNEkfjr8cyWbY48aNVwNUlg4n4',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxa2FrYmRnZWV4cHB2bHJ2a2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NzMyMzAsImV4cCI6MjA5NjU0OTIzMH0.axqMhr3FYHw7k_qD-PkD-_2BVJzBK1bph0aeJDHFveA',
   /** Se true e o Supabase estiver configurado, exige login nas páginas privadas (redireciona para login). */
   protegerPaginasPrivadas: true,
   /**
