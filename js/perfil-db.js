@@ -1,3 +1,5 @@
+const { paginaAtual } = require("./menu-active");
+
 /**
  * Perfil do usuário: tabela public.perfis no Supabase + armazenamento local em modo demo.
  *
@@ -246,4 +248,9 @@
     AREAS_OPCOES: AREAS_OPCOES,
     renderAreasChips: renderAreasChips,
   };
-})(window);
+})(window);document.querySelectorAll("nav a").forEach(link => {
+    if (link.getAttribute("href") === paginaAtual) {
+        link.classList.add("active");
+    }
+});
+
