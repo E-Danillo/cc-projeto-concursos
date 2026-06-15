@@ -267,6 +267,8 @@
 
   async function init() {
     showMsg('', false);
+    const toolbar = el('toolbar');
+    if (toolbar) toolbar.hidden = true;
 
     const s = await getSession();
     if (!s || s.tipo !== 'supabase') {
@@ -287,8 +289,10 @@
 
     const badge = el('role-badge');
     if (badge) {
-      badge.textContent = isAdmin ? '👑 Cargo: Admin' : '👤 Cargo: Usuário';
+      const nomeExibicao = (perfil && perfil.nome_exibicao) ? perfil.nome_exibicao : 'Usuário';
+      badge.textContent = isAdmin ? '👑 Admin: ' + nomeExibicao : '👤 Usuário: ' + nomeExibicao;
       badge.className = 'role-badge ' + (isAdmin ? 'role-admin' : 'role-user');
+}     badge.hidden = false;
     }
 
     const hint = el('user-hint');
