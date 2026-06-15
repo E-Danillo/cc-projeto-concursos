@@ -292,7 +292,7 @@
       const nomeExibicao = (perfil && perfil.nome_exibicao) ? perfil.nome_exibicao : 'Usuário';
       badge.textContent = isAdmin ? '👑 Admin: ' + nomeExibicao : '👤 Usuário: ' + nomeExibicao;
       badge.className = 'role-badge ' + (isAdmin ? 'role-admin' : 'role-user');
-}     badge.hidden = false;
+}     badge.hidden = true;
     }
 
     const hint = el('user-hint');
